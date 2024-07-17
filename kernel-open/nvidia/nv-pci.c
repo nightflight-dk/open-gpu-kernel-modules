@@ -549,25 +549,6 @@ nv_pci_probe
             goto failed;
         }
 
-        if (pci_dev->dev.bus->iommu_ops == NULL)
-        {
-            nv = NV_STATE_PTR(nvl);
-            if (rm_is_iommu_needed_for_sriov(sp, nv))
-            {
-                nv_printf(NV_DBG_ERRORS, "NVRM: Aborting probe for VF %04x:%02x:%02x.%x "
-                          "since IOMMU is not present on the system.\n",
-                           NV_PCI_DOMAIN_NUMBER(pci_dev), NV_PCI_BUS_NUMBER(pci_dev),
-                           NV_PCI_SLOT_NUMBER(pci_dev), PCI_FUNC(pci_dev->devfn));
-                goto failed;
-            }
-        }
-
-        if (nvidia_vgpu_vfio_probe(pci_dev) != NV_OK)
-        {
-            nv_printf(NV_DBG_ERRORS, "NVRM: Failed to register device to vGPU VFIO module");
-            goto failed;
-        }
-
         nv_kmem_cache_free_stack(sp);
         return 0;
 #else
