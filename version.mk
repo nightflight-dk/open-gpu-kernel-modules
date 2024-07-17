@@ -1,6 +1,5 @@
 NVIDIA_VERSION = 550.90.07
 
-# This file.
 VERSION_MK_FILE := $(lastword $(MAKEFILE_LIST))
 $(OUTPUTDIR)/version.h: $(VERSION_MK_FILE)
 	@$(MKDIR) $(OUTPUTDIR)
